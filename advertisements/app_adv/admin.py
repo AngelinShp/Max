@@ -2,9 +2,9 @@ from django.contrib import admin
 from .models import Advertisements
 # Register your models here.
 
-class AdvertisementAdmin(admin.ModelAdmin):
+class AdvertisementAdmin(admin.ModelAdmin): #админ-модель
     list_display = ['id', 'title', 'description', 'price',
-                    'created_time', 'auction']
+                    'created_date', 'auction']
     list_filter = ['auction', 'created_time']
 
     actions=['make_auction_false', 'make_auction_true']
@@ -13,7 +13,9 @@ class AdvertisementAdmin(admin.ModelAdmin):
             'Общее', {'fields': ('title', 'description')}
         ),
         (
-            'Финансы', {'fields': ('price', 'auction')}
+            'Финансы', {'fields': ('price', 'auction'),
+                        'classes': ['collapse']
+                        }
         )
     )
     @admin.action(description='Убрать возможность торга')
