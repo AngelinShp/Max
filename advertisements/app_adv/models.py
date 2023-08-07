@@ -1,9 +1,11 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.db import models
 
 # Create your models here.
 from django.utils.html import format_html
 
+User=get_user_model() #получаем модель Userа
 
 class Advertisements(models.Model):
     title=models.CharField("Заголовок", max_length=128)
@@ -12,6 +14,7 @@ class Advertisements(models.Model):
     auction=models.BooleanField("Торг", help_text="Отметьте, если торг уместен")
     created_time=models.DateTimeField(auto_now_add=True)
     updated_time=models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
 
     @admin.display(description='Дата создания')
     def created_date(self):
