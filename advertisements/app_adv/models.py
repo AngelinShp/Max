@@ -37,7 +37,7 @@ class Advertisements(models.Model):
                                '{}</span>', upd_time)
         return self.updated_time.strftime("%d.%m.%Y в %H:%M:%S")
 
-    @admin.display(description='фото')
+    @admin.display(description='Фото')
     def get_html_image(self):
         if self.image:
             return format_html(
