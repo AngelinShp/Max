@@ -16,15 +16,15 @@ def top_sellers(request):
 
 def advertisement_post(request):
     if request.method == "POST":
-        form=AdvertisementForm(request.POST, request.FILES)
+        form = AdvertisementForm(request.POST, request.FILES)
         if form.is_valid():
-            advertisement=Advertisements(**form.cleaned_data)
-            advertisement.user=request.user
-            advertisement.save()
-            url=reverse('main-page')
+            new_advertisement = form.save(commit=False)
+            new_advertisement.user = request.user
+            new_advertisement.save()
+            url = reverse('main-page')
             return redirect(url)
     else:
-        form=AdvertisementForm()
-    context={'form':form}
+        form = AdvertisementForm()
+    context = {'form': form}
     return render(request, 'advertisement-post.html', context)
 
