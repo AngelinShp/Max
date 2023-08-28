@@ -10,9 +10,23 @@ from django.urls import reverse_lazy
 
 # def profile(request):
 #     return render(request, 'app_auth/profile.html')
+from app_auth.forms import ExtendedUserCreationForm
+
 
 def register(request):
-    return render(request, 'app_auth/register.html')
+    if request.method == "POST":
+        form = ExtendedUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user = authenticate(username=user.username, password=request.POST['password1'])
+            login(request, user=user)
+            return redirect(reverse('profile'))
+    else:
+        form = ExtendedUserCreationForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'app_auth/register.html', context)
 
 def login_view(request):
     redirect_url=reverse('profile')
