@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 # Create your models here.
+from django.urls import reverse
 from django.utils.html import format_html
 
 User=get_user_model() #получаем модель Userа
@@ -43,7 +44,8 @@ class Advertisements(models.Model):
             return format_html(
                 '<img src="{url}" style="max-width: 80px; max-height: 80px;">', url=self.image.url)
 
-    # def __str__(self):
+    def get_absolute_url(self):
+        return reverse('adv-detail', kwargs={'pk': self.pk})
     def __str__(self):
         return f"Advertisement(id={self.id}, title={self.title}, price={self.price})"
 
